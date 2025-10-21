@@ -1,3 +1,9 @@
+const tasks = [
+  { id: 1, description: "Complete React component refactor", completed: false },
+  { id: 2, description: "Write documentation for new API", completed: true },
+  { id: 3, description: "Go for a 30-minute walk", completed: false },
+];
+
 export default function App() {
   return (
     <div className="background">
