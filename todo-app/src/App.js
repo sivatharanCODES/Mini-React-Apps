@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { useState } from "react";
 
 const taskss = [
   { id: 1, description: "Complete React component refactor", completed: false },
@@ -7,7 +7,7 @@ const taskss = [
 ];
 
 export default function App() {
-  const [tasks, setTask] = useState([...taskss]);
+  const [tasks, setTasks] = useState([...taskss]);
   const [filterBy, setFilterBy] = useState("All");
 
   function handleFilterBy(value) {
@@ -15,13 +15,13 @@ export default function App() {
   }
 
   function handleAddItem(item) {
-    setTask((task) => [...tasks, item]);
+    setTasks((tasks) => [...tasks, item]);
   }
   function handleDeleteItem(id) {
-    setTask((tasks) => tasks.filter((task) => task.id !== id));
+    setTasks((tasks) => tasks.filter((task) => task.id !== id));
   }
   function handleFinishTask(id) {
-    setTask((tasks) =>
+    setTasks((tasks) =>
       tasks.map((task) =>
         task.id === id ? { ...task, completed: !task.completed } : task
       )
@@ -34,14 +34,14 @@ export default function App() {
       "Are you sure you want to delete all completed tasks?"
     );
     confirm &&
-      setTask((tasks) => tasks.slice().filter((task) => !task.completed));
+      setTasks((tasks) => tasks.slice().filter((task) => !task.completed));
   }
   function handleDeleteAllTasks() {
     if (!tasks.length) return;
     const confirm = window.confirm(
       "Are you sure you want to delete all tasks?"
     );
-    confirm && setTask((tasks) => []);
+    confirm && setTasks((tasks) => []);
   }
   return (
     <div className="background">
@@ -137,13 +137,13 @@ function AllTaskContainer({
 
 function Filter({ onFilter, filterBy }) {
   return (
-    <div
-      className="filter-container"
-      value={filterBy}
-      onChange={(e) => onFilter(e.target.value)}
-    >
+    <div className="filter-container">
       <span className="filter-title">Filter by : </span>
-      <select className="filter">
+      <select
+        className="filter"
+        value={filterBy}
+        onChange={(e) => onFilter(e.target.value)}
+      >
         <option className="filter-op" value="All">
           All
         </option>
@@ -197,7 +197,7 @@ function StatusBar({ tasks, onDeletedCompletedTasks, onDeleteAll }) {
     .slice()
     .filter((task) => task.completed === false).length;
   return (
-    <div className="staus-bar">
+    <div className="status-bar">
       <span>
         {totalTaskLeft
           ? `${totalTaskLeft} tasks left`
